@@ -1,0 +1,15 @@
+<form class="form-signin" action="/auth/login/getAuth" method="POST" style="background-color: #eee;">
+      <h1 class="h3 mb-3 font-weight-normal">Ingresar</h1>
+      <label for="inputUser" class="sr-only">Usuario</label>
+      <input type="user" id="inputUser" name="username" class="form-control" placeholder="Username" required autofocus >
+      <label for="inputPassword" class="sr-only">Clave</label>
+      <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+       {{#if error}}
+        <div class="alert alert-danger" role="alert">
+            {{error}}
+        </div>
+        {{/if}}
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Acceder</button>
+     
+      <p class="mt-5 mb-3 text-muted">&copy; Carlos Velez-2019</p>
+</form>
