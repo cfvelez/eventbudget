@@ -9,6 +9,10 @@ var validateEmail = function(email) {
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+  code: {
+    type:String,
+    required: [true, "code es un campo requerido."]
+  },
   name: {
     type: String,
     required: [true, "Nombre es un campo requerido."]
@@ -26,6 +30,10 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: [true, "Password es un campo requerido."]
+  },
+  status : {
+     type: Boolean,
+     default: false
   }
 }, { 
     timeStamps: true,

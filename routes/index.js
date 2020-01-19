@@ -1,10 +1,12 @@
+//Importamos express
 const express = require("express");
+//Importamos el servicio de routing
 const router = express.Router();
+//configuramos middleware para gestionar la seguridad
+//const { isAuthenticated } = require("../middlewares/authentication");
 
-router.get("/home",(request, response) => {
-
-    response.render("login");
-
-});
+//rutas relacionadas con la autenticación
+router.use("/auth", require("./auth"));
+router.use("/user", require("./user"));
 
 module.exports = router;

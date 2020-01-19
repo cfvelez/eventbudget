@@ -1,17 +1,8 @@
-
 const Express = require("express");
-const bcrypt = require("bcryptjs")
-
 const router = Express.Router();
+const auth = require("../../controllers/auth");
+const {isAuthenticated} = require('../../middlewares/authentication');
+// LogOut
+router.get("/",isAuthenticated, auth.logout);
 
-
-
-router.get("/", async (req, res) => {
-
-    req.session.destroy();
-
-    res.redirect('../../home');
-})
-
-
-module.exports = router
+module.exports = router;
