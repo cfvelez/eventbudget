@@ -19,5 +19,8 @@ module.exports = app => {
 
   passport.use(require("./strategies/jwt"));
 
+  //Estrategia de facebook
+  passport.use(require("./strategies/facebook"));
+
   // 1.5. Tras esto, podemos proceder a autenticar las rutas (ir a ./routes/index)
 };
