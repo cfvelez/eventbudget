@@ -14,6 +14,7 @@ const opt = {
 };
 
 // La estrategía local recibe un primer parametro de configuración y un callback de verificación como segundo parametro
+
 module.exports = new LocalStrategy(
   opt,
   async (email, password, next) => {

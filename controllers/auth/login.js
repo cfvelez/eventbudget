@@ -14,7 +14,8 @@ module.exports = async (req, res,next) => {
     // Si hay info, el error será del cliente, por lo que lo devolvemos con un 400
     
     if (info) res.status(400).json(info);
-  
+      
+    req.user = user;
 
     res.status(200).json({ msg:"Usuario Logueado." });
     // Ejecutamos la función pasandole los parametros req y res

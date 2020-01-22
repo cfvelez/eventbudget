@@ -23,8 +23,13 @@ module.exports = async app => {
   contraseña sea validad) */
   
   // requires the model with Passport-Local Mongoose plugged in
+  const User = require('../../models/User');
+  //passport.use(await User.authenticate());
 
-  //passport.use(await User.createStrategy());
+  // use static serialize and deserialize of model for passport session support
+  passport.serializeUser(await User.serializeUser());
+  passport.deserializeUser(await User.deserializeUser());
+
   /*
   passport.serializeUser((user, callback) => {
     console.log("SERIALIZADOR");

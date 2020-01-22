@@ -8,6 +8,7 @@ var indexRouter = require("./routes/index");
 require("./services/passport/config")(app);
 //importamos las rutas requeridas
 
+require("./services/mongoose");
 app.use("/", indexRouter);
 
 //gestionamos las rutas no configuradas
