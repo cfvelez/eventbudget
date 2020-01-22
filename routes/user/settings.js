@@ -4,6 +4,6 @@ const { isAuthenticated } = require("../../middlewares/authentication");
 const isUserActive = require("../../middlewares/isUserActive");
 const {settings} = require("../../controllers/user");
 
-router.get("/",[isAuthenticated, isUserActive],settings.getProfile);
+router.get("/",[isUserActive],settings.getProfile);
 
 module.exports = router;

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 var uniqueValidator = require("mongoose-unique-validator");
+var passportLocalMongoose = require('passport-local-mongoose');
 
 var validateEmail = function(email) {
   var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -40,6 +41,7 @@ const userSchema = new Schema({
     createdAt: true 
     });
 
-userSchema.plugin(uniqueValidator, { message: "{PATH} debe ser unico. " });
+userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(uniqueValidator, { message: "{PATH} debe ser único. " });
 
 module.exports = mongoose.model("User", userSchema);

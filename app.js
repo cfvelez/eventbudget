@@ -2,7 +2,6 @@
 //cargamos las variables del entorno
 require("dotenv").config();
 const app = require("./conf/");
-const mongoose = require("./services/mongoose");
 var indexRouter = require("./routes/index");
 
 //Iniciamos la configuración de passport

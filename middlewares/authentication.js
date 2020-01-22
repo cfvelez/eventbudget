@@ -3,11 +3,15 @@ const passport = require("passport");
 module.exports = {
   // 5. Definimos el middlewere que ire en la ruta a autenticar
   isAuthenticated: (req, res, next) => {
-    // definimos el método de autenticación como jwt, la sesión a false y el callback para gestionar la información de la estrategia jwt
-    passport.authenticate("jwt", { session: false }, (error, user, info) => {
+  
+    passport.authenticate("local",{session:true}, (error, user, info) => {
       console.log(
-        `Autenticación de estrategia jwt. Información recibida: error: ${error}, user: ${user.email}, info: ${info}`
+        `Middleware Autenticación de estrategia local. Información recibida: error: ${error}, user: ${user.email}, info: ${info}`
       );
+
+      console.log(req.isAuthenticated());
+
+      console.log(info);
       
       // comprobamos si hay error interno
       if (error) return res.status(500).json({ message: "Hubo un error" });
@@ -21,6 +25,6 @@ module.exports = {
       next();
 
       //Ejecutamos la función con req, res, next como parametros
-    })(req, res, next);//no entiendo esto
+    });//no entiendo esto
   }
 };

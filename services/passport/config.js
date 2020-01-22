@@ -1,26 +1,57 @@
 const passport = require("passport");
+const session = require("express-session");
 
-module.exports = app => {
-  // 1.1 CONFIGURAMOS EN EXPRESS LA CONFIGURACIÓN DE PASSPORT
-  /* Dado que para la autenticación por token no es necesario el uso de sesiones
-  no será necesario la configuración de la sessión:
-    app.use(passport.session());
 
-  Tampoco será necesario configurar, por tanto, el serialize y deserialize  */
+module.exports = async app => {
+ 
+  app.use(
+    session({
+      secret: "even-budget",
+      resave: false,
+      saveUninitialized: false
+    })
+    );
+  
   app.use(passport.initialize());
+
+  app.use(passport.session());
+  passport.use(require("./strategies/local"));
 
   // 1.2. DEFINIMOS LA ESTRATEGIA LOCAL.
   /* Esta estrategia servirá para establecer el login. 
   En ella comprobaremos que los datos de usuario son correctos (en este caso que exista y que la 
   contraseña sea validad) */
+  
+  // requires the model with Passport-Local Mongoose plugged in
 
-  passport.use(require("./strategies/local"));
-  // 1.3. Tras esta función definiremos la ruta login (ir a ./routes/auth/login para continuar)
-
-  passport.use(require("./strategies/jwt"));
+  //passport.use(await User.createStrategy());
+  /*
+  passport.serializeUser((user, callback) => {
+    console.log("SERIALIZADOR");
+    callback(null, user);
+  });
+  
+  passport.deserializeUser(async (id, callback) => {
+    console.log("DESERIALIZADOR");
+  
+    try {
+      const user = await User.findById(id);
+  
+      if (!user) return callback({ message: "El usuario no existe" });
+  
+      return callback(null, user);
+    } catch (error) {
+      console.log(error);
+      return callback(error);
+    }
+  });
+  */
+  //passport.use(require("./strategies/jwt"));
 
   //Estrategia de facebook
-  passport.use(require("./strategies/facebook"));
+  //passport.use(require("./strategies/facebook"));
+
+  
 
   // 1.5. Tras esto, podemos proceder a autenticar las rutas (ir a ./routes/index)
 };
