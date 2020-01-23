@@ -7,33 +7,25 @@ module.exports = async app => {
   app.use(
     session({
       secret: "even-budget",
-      resave: false,
-      saveUninitialized: false
+      resave: true,
+      saveUninitialized: true
     })
     );
   
   app.use(passport.initialize());
 
   app.use(passport.session());
-  passport.use(require("./strategies/local"));
+  
 
   // 1.2. DEFINIMOS LA ESTRATEGIA LOCAL.
   /* Esta estrategia servirá para establecer el login. 
   En ella comprobaremos que los datos de usuario son correctos (en este caso que exista y que la 
   contraseña sea validad) */
-  
-  // requires the model with Passport-Local Mongoose plugged in
-  const User = require('../../models/User');
-  //passport.use(await User.authenticate());
-
-  // use static serialize and deserialize of model for passport session support
-  passport.serializeUser(await User.serializeUser());
-  passport.deserializeUser(await User.deserializeUser());
-
-  /*
+ 
+  passport.use(require("./strategies/local"));
   passport.serializeUser((user, callback) => {
     console.log("SERIALIZADOR");
-    callback(null, user);
+    callback(null, user._id);
   });
   
   passport.deserializeUser(async (id, callback) => {
@@ -50,7 +42,9 @@ module.exports = async app => {
       return callback(error);
     }
   });
-  */
+
+  
+  
   //passport.use(require("./strategies/jwt"));
 
   //Estrategia de facebook

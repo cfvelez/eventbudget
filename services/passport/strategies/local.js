@@ -22,9 +22,6 @@ module.exports = new LocalStrategy(
       `Estrategia local. Información recibida: email ${email}, password${password}`
     );
     try {
-
-      // Buscamos el usuario a traves del email
-      console.log("aqui");
     
       const user = await User.findOne({ email });
 

@@ -4,12 +4,14 @@ require("dotenv").config();
 const app = require("./conf/");
 var indexRouter = require("./routes/index");
 
+//configuramos mongoose
+require("./services/mongoose");
+
+//importamos las rutas requeridas
+app.use("/", indexRouter);
+
 //Iniciamos la configuración de passport
 require("./services/passport/config")(app);
-//importamos las rutas requeridas
-
-require("./services/mongoose");
-app.use("/", indexRouter);
 
 //gestionamos las rutas no configuradas
 app.use((request, response) => {
