@@ -41,7 +41,7 @@ module.exports = async (req, res) => {
     //se activa en entorno de producciòn
     //const response =  mail.sendConfirmSignUp(user.email, user.name + ' '+ user.lastname,confirmationCode);
 
-    res.status(200).json({ user, response });
+    res.status(200).json({ user });
 
   } catch (error) {
     console.log(error);
