@@ -2,7 +2,7 @@
 //cargamos las variables del entorno
 require("dotenv").config();
 const app = require("./conf/");
-const mongoose = require("./services/mongoose");
+require("./services/mongoose");
 var indexRouter = require("./routes/index");
 
 //Iniciamos la configuración de passport
@@ -17,7 +17,12 @@ app.use((request, response) => {
 });
 
 //Iniciamos el servidor
-const PORT = process.env.SERVER_PORT ? process.env.SERVER_PORT:80;
-app.listen(PORT, () => {
-  console.log(`Server listening ${PORT}`);
-});
+if (process.env.SERVER_PORT ){
+  app.listen(process.env.SERVER_PORT, () => {
+    console.log(`Server listening ${process.env.SERVER_PORT}`);
+  });
+}
+else{
+app.listen();
+console.log('Server running on %s', app.address().port);
+}
