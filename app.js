@@ -24,5 +24,5 @@ if (process.env.SERVER_PORT ){
 }
 else{
 app.listen();
-console.log('Server running on %s', app.address().port);
+console.log('Server running...');
 }
