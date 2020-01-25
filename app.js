@@ -17,7 +17,7 @@ app.use((request, response) => {
 });
 
 //Iniciamos el servidor
-const PORT = process.env.SERVER_PORT ? process.env.SERVER_PORT:'';
+const PORT = process.env.SERVER_PORT ? process.env.SERVER_PORT:80;
 app.listen(PORT, () => {
   console.log(`Server listening ${PORT}`);
 });
