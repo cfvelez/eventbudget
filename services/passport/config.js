@@ -1,14 +1,13 @@
 const passport = require("passport");
 const session = require("express-session");
 
-
 module.exports = async app => {
  
   app.use(
     session({
       secret: "even-budget",
-      resave: true,
-      saveUninitialized: true
+      resave: false,
+      saveUninitialized: false
     })
     );
   
@@ -22,33 +21,12 @@ module.exports = async app => {
   En ella comprobaremos que los datos de usuario son correctos (en este caso que exista y que la 
   contraseña sea validad) */
  
-  passport.use(require("./strategies/local"));
-  passport.serializeUser((user, callback) => {
-    console.log("SERIALIZADOR");
-    callback(null, user._id);
-  });
-  
-  passport.deserializeUser(async (id, callback) => {
-    console.log("DESERIALIZADOR");
-  
-    try {
-      const user = await User.findById(id);
-  
-      if (!user) return callback({ message: "El usuario no existe" });
-  
-      return callback(null, user);
-    } catch (error) {
-      console.log(error);
-      return callback(error);
-    }
-  });
-
-  
+  require("./strategies/local")(passport);
   
   //passport.use(require("./strategies/jwt"));
 
   //Estrategia de facebook
-  //passport.use(require("./strategies/facebook"));
+  passport.use(require("./strategies/facebook"));
 
   
 

@@ -1,7 +1,6 @@
-const bcrypt = require("bcryptjs");
 const User = require("../../models/User");
 const uuid = require("uuid/v1");
-const mail = require('../../services/nodemailer');
+//const mail = require('../../services/nodemailer');
 
 module.exports = async (req, res) => {
   const { password, email, name,lastname } = req.body;
@@ -20,18 +19,16 @@ module.exports = async (req, res) => {
 
   try {
     console.log("Creando usuario");
-    const hashPass = bcrypt.hashSync(password, 10);
-
+    const user = new User();
+    const hashPass = user.hashPaswword(password);
     const confirmationCode = uuid();
-    console.log(confirmationCode);
-
-    const user = new User({
-        code:confirmationCode,
-        password: hashPass,
-        email,
-        name,
-        lastname
-    });
+    
+    //Asignamos los campos al objeto User
+    user.code = confirmationCode;
+    user.password = hashPass;
+    user.email = email;
+    user.name = name;
+    user.lastname = lastname;
 
     let userDB = await user.save();
 

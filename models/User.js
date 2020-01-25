@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 var uniqueValidator = require("mongoose-unique-validator");
-var passportLocalMongoose = require('passport-local-mongoose');
+const bcrypt = require("bcryptjs");
+//var passportLocalMongoose = require('passport-local-mongoose');
 
 var validateEmail = function(email) {
   var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -41,7 +42,17 @@ const userSchema = new Schema({
     createdAt: true 
     });
 
-userSchema.plugin(passportLocalMongoose);
+//validación de campos
 userSchema.plugin(uniqueValidator, { message: "{PATH} debe ser único. " });
+
+//Generamos hash de la contraseña
+userSchema.methods.hashPassword = (password)=> {
+  return bcrypt.hashSync(password, 10);
+}
+
+//Verificamos contraseña
+userSchema.methods.comparePassword = (password,hash)=>{
+  return bcrypt.compareSync(password, hash);
+}
 
 module.exports = mongoose.model("User", userSchema);
