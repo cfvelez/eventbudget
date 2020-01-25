@@ -16,13 +16,5 @@ app.use((request, response) => {
   response.status(404).json({msg:"Ruta no encontrada."});
 });
 
-//Iniciamos el servidor
-if (process.env.SERVER_PORT ){
-  app.listen(process.env.SERVER_PORT, () => {
-    console.log(`Server listening ${process.env.SERVER_PORT}`);
-  });
-}
-else{
-app.listen();
-console.log('Server running...');
-}
+module.exports = app;
+
