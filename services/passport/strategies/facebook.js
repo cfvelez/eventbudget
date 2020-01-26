@@ -1,6 +1,6 @@
 
 require("dotenv").config();
-const FacebookStrategy = require('passport-facebook').Strategy;
+const FacebookTokenStrategy = require('passport-facebook-token').Strategy;
 const User = require("../../../models/User");
 
 const config = {
@@ -9,7 +9,7 @@ const config = {
     callbackURL: `${process.env.URL_FACEBOOK_CALLBACK}/auth/facebook/callback`
   }
 
-module.exports = new FacebookStrategy( config,
+module.exports = new FacebookTokenStrategy( config,
   async function(accessToken, refreshToken, profile, done) {
     
     console.log('accessToken:'+accessToken);
