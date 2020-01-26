@@ -10,10 +10,10 @@ module.exports = async (req, res) => {
     );
 
     // Si hay un error de servidor, envíamos un 500
-    if (error) res.status(500).json({ message: "Hubo un error" });
+    if (error) return res.status(500).json({ message: "Hubo un error" });
 
     // Si hay info, el error será del cliente, por lo que lo devolvemos con un 400
-    if (info) res.status(400).json({ message: info });
+    if (info) return res.status(400).json({ message: info });
 
     // Procedemos a definir el payload del token.
     // en el podemos introducir la información establecer para la comunicación implicita entre el cliente y el servidor
