@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 module.exports = async (req, res) => {
   // procedemos a autenticar la estrategia local
-  passport.authenticate("facebook", { session: false }, (error, user, info) => {
+  passport.authenticate("facebook", (error, user, info) => {
     console.log(
       `Autenticación de estrategia Facebook. Información recibida: error: ${error}, user: ${user}, info: ${info}`
     );

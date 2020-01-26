@@ -21,7 +21,8 @@ module.exports = new FacebookStrategy( config,
          // Buscamos el usuario a traves del email
      const user = await User.findOne({ email });
 
-     if (err) { return done(err); }
+     if (!user) { return done('No se encontro usuario',null); }
+
        done(null, user);
 
     }catch(error){
