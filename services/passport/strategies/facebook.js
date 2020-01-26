@@ -6,7 +6,7 @@ const User = require("../../../models/User");
 const config = {
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: `${process.env.URL_FACEBOOK_CALLBACK}/auth/facebook/callback`
+    callbackURL: `/auth/facebook/callback`
   }
 
 module.exports = new FacebookStrategy( config,
