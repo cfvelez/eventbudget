@@ -25,6 +25,7 @@ module.exports = new FacebookStrategy( config,
        done(null, user);
 
     }catch(error){
+      console.error(error);
         done(error);
     }
    
