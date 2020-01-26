@@ -11,7 +11,7 @@ const config = {
 
 module.exports = new FacebookStrategy( config,
   async function(accessToken, refreshToken, profile, done) {
-    email = "dfvelez9@gmail.com";
+    
     console.log('accessToken:'+accessToken);
     console.log('refreshToken:'+refreshToken);
     console.log('profile:'+profile);
