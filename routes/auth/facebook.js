@@ -7,6 +7,6 @@ const auth = require("../../controllers/auth");
 
 router.get('/', passport.authenticate('facebook'));
 
-router.get('/callback/:code',auth.facebok );
+router.get('/callback',auth.facebok );
 
 module.exports = router;
