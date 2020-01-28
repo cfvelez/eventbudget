@@ -23,7 +23,6 @@ module.exports = async (req, res) => {
     const hashPass = bcrypt.hashSync(password, 10);
 
     const confirmationCode = uuid();
-    console.log(confirmationCode);
 
     const user = new User({
         code:confirmationCode,

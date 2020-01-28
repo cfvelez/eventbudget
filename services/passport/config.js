@@ -22,5 +22,8 @@ module.exports = app => {
   //Estrategia de facebook
   passport.use(require("./strategies/facebook"));
 
+  //Estrategia de gmail
+  passport.use(require("./strategies/google"));
+
   // 1.5. Tras esto, podemos proceder a autenticar las rutas (ir a ./routes/index)
 };

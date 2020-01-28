@@ -4,5 +4,6 @@ module.exports = {
   signup: require("./signup"),
   confirm: require("./confirm"),
   logout: require("./logout"),
-  facebok: require("./facebook")
+  facebok: require("./facebook"),
+  google: require("./google")
 };

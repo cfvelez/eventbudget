@@ -4,16 +4,18 @@ const jwt = require("jsonwebtoken");
 
 module.exports = async (req, res) => {
   // procedemos a autenticar la estrategia local
-  passport.authenticate("local", { session: false }, (error, user, info) => {
+  passport.authenticate("google" ,{ scope: ['profile','email'] }, (error, user, info) => {
     console.log(
-      `Autenticación de estrategia local. Información recibida: error: ${error}, user: ${user}, info: ${info}`
+      `Autenticación de estrategia Google. Información recibida: error: ${error}, user: ${user}, info: ${info}`
     );
 
+    console.log(info);
+
     // Si hay un error de servidor, envíamos un 500
-    if (error) return res.status(500).json({ message: "Hubo un error" });
+    if (error) return res.status(500).json(error);
 
     // Si hay info, el error será del cliente, por lo que lo devolvemos con un 400
-    if (info) return res.status(400).json(info);
+    //if (info) return res.status(400).json({ message: info });
 
     // Procedemos a definir el payload del token.
     // en el podemos introducir la información establecer para la comunicación implicita entre el cliente y el servidor
@@ -38,3 +40,4 @@ module.exports = async (req, res) => {
     // Ejecutamos la función pasandole los parametros req y res
   })(req, res);
 };
+  

@@ -6,7 +6,7 @@ router.use("/login", require("./login"));
 router.use("/userconfirmation", require("./confirm"));
 router.use("/logout", require("./logout"));
 router.use("/facebook",require("./facebook"));
-
+router.use("/google",require("./google"));
 
 
 module.exports = router;

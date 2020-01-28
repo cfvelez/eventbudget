@@ -28,17 +28,25 @@ const userSchema = new Schema({
     validate: [validateEmail, 'Por favor ingrese un email valido.']
   },
   password: {
-    type: String,
-    required: [true, "Password es un campo requerido."]
+    type: String
   },
   status : {
      type: Boolean,
      default: false
+  },
+  provider :{
+    type:String,
+    enum:{
+        values:['I','G','F'],
+        message: "{VALUE} no es un estado valido"
+    },
+    default: 'I'  
+  },
+  createdAt:{
+    type:Date,
+        default: Date.now()
   }
-}, { 
-    timeStamps: true,
-    createdAt: true 
-    });
+});
 
 userSchema.plugin(uniqueValidator, { message: "{PATH} debe ser unico. " });
 
