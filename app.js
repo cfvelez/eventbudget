@@ -7,8 +7,8 @@ var indexRouter = require("./routes/index");
 
 //Iniciamos la configuración de passport
 require("./services/passport/config")(app);
-//importamos las rutas requeridas
 
+//importamos las rutas requeridas
 app.use("/", indexRouter);
 
 //gestionamos las rutas no configuradas

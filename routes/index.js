@@ -8,5 +8,5 @@ const router = express.Router();
 //rutas relacionadas con la autenticación
 router.use("/auth", require("./auth"));
 router.use("/user", require("./user"));
-
+router.use("/events", require("./events"));
 module.exports = router;

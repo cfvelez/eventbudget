@@ -42,6 +42,10 @@ const userSchema = new Schema({
     },
     default: 'I'  
   },
+  settings:{
+    type: Schema.Types.ObjectId,
+    ref: "Settings"
+  },
   createdAt:{
     type:Date,
         default: Date.now()
