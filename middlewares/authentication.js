@@ -13,7 +13,12 @@ module.exports = {
       if (error) return res.status(500).json({ message: "Hubo un error" });
 
       // Comprobamos si está autorizado
+      if (info) return res.status(401).json(info);
+
+      // Comprobamos si está autorizado
       if (!user) return res.status(401).json({ message: "No autorizado" });
+
+       
 
       // Iniciamos el usuario en el objeto req para poder acceder en la función handler o principal
       req.user = user;
