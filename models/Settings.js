@@ -4,7 +4,7 @@ const CategorySchema = require('./Category');
 
 const settingsSchema = new Schema({
   budget:{
-          type:Double,
+          type:Number,
           require: [true, {message: "El presupuesto es un campo requerido."}]
   },
   numTickets:{
@@ -16,7 +16,8 @@ const settingsSchema = new Schema({
     ref: "Cities"
   },
   categories :{
-    type:[CategorySchema]
+    array:[{ type: Schema.Types.ObjectId,
+      ref: "Categories"}]
   }
 });
 

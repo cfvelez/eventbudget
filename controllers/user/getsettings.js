@@ -3,7 +3,7 @@ const User = require("../../models/User");
 module.exports = async (req, res) => {
     try {
       const user = await User.findById(req.user._id); 
-
+      
       res.status(200).json(user);
     } catch (error) {
       console.log(error);

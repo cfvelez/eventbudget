@@ -1,4 +1,5 @@
 
 module.exports = {
-  get: require("./getsettings")
+  get: require("./getsettings"),
+  set: require("./setsettings")
 };
