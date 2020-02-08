@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const CategorySchema = require('./Category');
 
 const settingsSchema = new Schema({
   budget:{
@@ -17,7 +16,7 @@ const settingsSchema = new Schema({
   },
   categories :{
     array:[{ type: Schema.Types.ObjectId,
-      ref: "Categories"}]
+      ref: "Category"}]
   }
 });
 
