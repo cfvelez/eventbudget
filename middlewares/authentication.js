@@ -13,7 +13,7 @@ module.exports = {
       if (error) return res.status(500).json({ message: "Hubo un error" });
 
       // Comprobamos si está autorizado
-      if (info) return res.status(401).json(info);
+      if (info) return res.status(401).json({message: `${info}`}); 
 
       // Comprobamos si está autorizado
       if (!user) return res.status(401).json({ message: "No autorizado" });

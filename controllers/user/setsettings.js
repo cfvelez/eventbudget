@@ -1,13 +1,13 @@
 const User = require("../../models/User");
 const Settings = require("../../models/Settings");
-const City =  require("../../models/Cities");
+const City =  require("../../models/City");
 
 module.exports = async (req, res) => {
     try {
-          const user = await User.findById(req.user._id); 
-        
-          const bodySettings = { budget, numTickets,location,categories } = req.body;
-          
+          const user = await User.findById(req.user._id).populate("settings"); 
+
+          const bodySettings = { budget, numTickets,location, startDate, endDate, categories } = req.body;
+
           if(bodySettings.budget <= 1) return res.status(200).json({msg:"El presupuesto debe ser mayor a 1 euros."});
 
           if(bodySettings.numTickets <= 0) return res.status(200).json({msg:"Cantidad de tickets incorrecto."});
@@ -20,10 +20,10 @@ module.exports = async (req, res) => {
             budget: bodySettings.budget,
             numTickets : bodySettings.numTickets,
             location: bodySettings.location,
+            startDate : bodySettings.startDate,
+            endDate : bodySettings.endDate,
             categories: bodySettings.categories
           });
-
-          let settings;
 
           if(user.settings){
             //find and update
@@ -36,11 +36,14 @@ module.exports = async (req, res) => {
 
           }
           else{
+            let settings;
             settings = await settingsObj.save();
             user.settings = settings._id;
+
             if(await user.save()){
               return res.status(200).json({msg:"Preferencias actualizadas correctamente."});
             }
+
           }
 
         return res.status(200).json({msg:"Error al guardar las preferencias."});
