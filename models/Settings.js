@@ -29,11 +29,11 @@ const settingsSchema = new Schema({
 class settingsClass {
 
    getStartDate() {
-    return `${this.startDate}` + "T00:00:00" ;
+    return this.startDate !== '' ? `${this.startDate}` + "T00:00:00" : '';
   }
 
   getEndDate() {
-    return `${this.endDate}` + "T23:59:59" ;
+    return this.endDate !== '' ? `${this.endDate}` + "T23:59:59" : '';
   }
 
  

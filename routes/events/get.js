@@ -5,5 +5,5 @@ const isUserActive = require("../../middlewares/isUserActive");
 
 const event = require("../../controllers/events/");
 
-router.get("/:segmentId",[isAuthenticated, isUserActive], event.all);
+router.get("/:Id",[isAuthenticated, isUserActive], event.get);
 module.exports = router;
