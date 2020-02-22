@@ -2,11 +2,13 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const categorySchema = new Schema({
+  tkm_id: {
+    type: String
+  },
   name: {
-    type: String,
-    require: [true, { message: "nombre de la categoria es un campo requerido." }]
+    type: String
   }
 });
 
-const Category = mongoose.model("Category", categorySchema);
+const Category = mongoose.model("category", categorySchema);
 module.exports = Category;
