@@ -9,4 +9,5 @@ const router = express.Router();
 router.use("/auth", require("./auth"));
 router.use("/user", require("./user"));
 router.use("/events", require("./events"));
+router.use("/cities", require("./cities"));
 module.exports = router;

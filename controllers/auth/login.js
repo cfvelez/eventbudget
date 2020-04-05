@@ -10,10 +10,11 @@ module.exports = async (req, res) => {
     );
 
     // Si hay un error de servidor, envíamos un 500
-    if (error) return res.status(500).json({ message: "Hubo un error" });
+    if (error)
+      return res.status(500).json({ result: "error", message: "Server error" });
 
     // Si hay info, el error será del cliente, por lo que lo devolvemos con un 400
-    if (info) return res.status(400).json(info);
+    if (info) return res.status(200).json({ result: "error", message: info });
 
     // Procedemos a definir el payload del token.
     // en el podemos introducir la información establecer para la comunicación implicita entre el cliente y el servidor
@@ -24,7 +25,7 @@ module.exports = async (req, res) => {
       // !NOTA: Transformamos la variable de entorno a número para poder operar con date.now
       exp: Date.now() + parseInt(process.env.JWT_EXPIRES),
       //Enviamos información útil adicional
-      username: user.email
+      username: user.email,
     };
 
     // Haciendo uso de la librería jsonwentoken generamos el token:
@@ -32,18 +33,16 @@ module.exports = async (req, res) => {
     // como segundo parámetro, recibe el SECRET también en formato de string. Lo recogemos del archivo .env
     const token = jwt.sign(JSON.stringify(payload), process.env.JWT_SECRET);
 
-    if(token){
-      jwt.verify(token,process.env.JWT_SECRET, (err, decoded)=>{
-
-        if(err){
-          return res.status(200).json({ data: err});
+    if (token) {
+      jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) {
+          return res.status(200).json({ result: "error", message: err });
         }
+      });
+    }
 
-      })
-    }  
- 
     //Devolvemos el token al usuario
-    return res.status(200).json({ data: { token } });
+    return res.status(200).json({ result: "ok", token });
     // Ejecutamos la función pasandole los parametros req y res
   })(req, res);
 };
