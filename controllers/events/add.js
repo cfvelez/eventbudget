@@ -5,6 +5,7 @@ const CategorySchema = require("../../models/Category");
 const TICKETMASTER = `${process.env.TICKETMASTER}events/`;
 const API_KEY = `apikey=${process.env.COSTUMER_KEY}`;
 const axios = require("axios");
+const { JSONResponse } = require("../../services/http/status");
 //https://app.ticketmaster.com/discovery/v2/events/Z698xZ2qZa7OS.json?apikey=mfBX49RdBdlwQxFuWkWTAvV9pgi8YBcU
 module.exports = async (req, res) => {
   try {
@@ -16,32 +17,44 @@ module.exports = async (req, res) => {
     if (ENDPOINT === "")
       return res
         .status(400)
-        .json({ msg: "No ha ingresado un identificado de evento." });
+        .json(
+          JSONResponse("error", "Debe proporcionar un id de evento para añadir")
+        );
 
     ENDPOINT = ENDPOINT + "?" + API_KEY;
 
     const eventSearch = await EventSchema.findOne({
       eventId: Id,
-      userId: req.user._id
+      userId: req.user._id,
     });
     if (eventSearch == null) {
       try {
         const response = await axios.get(ENDPOINT, config);
         const event = await setEvent(Id, req.user._id, response.data);
 
-        if (event !== null) res.status(200).json(event);
+        if (event !== null)
+          res
+            .status(200)
+            .json(JSONResponse("ok", "datos obtenidos exitosamente", event));
         else
           res
             .status(200)
-            .json({ msg: "Se genero un error al guardar el evento." });
+            .json(
+              JSONResponse("error", "Se genero un error al guardar el evento")
+            );
       } catch (error) {
         console.log(error);
-        res.status(200).json({ msg: "Evento no encontrado" });
+        res.status(200).json(JSONResponse("error", "Evento no encontrado"));
       }
     } else {
       res
         .status(200)
-        .json({ msg: "Este evento ya esta registrado en tus favoritos" });
+        .json(
+          JSONResponse(
+            "error",
+            "El evento ya se encuentra registrado entre tus favoritos."
+          )
+        );
     }
   } catch (error) {
     response.redirect("../../auth/logout");
@@ -58,7 +71,7 @@ async function setEvent(Id, userId, data) {
     return s;
   }, "");
 
-  const res_location = data._embedded.venues.map(x => x.name).join(",");
+  const res_location = data._embedded.venues.map((x) => x.name).join(",");
   const res_date = data.dates.start.localDate;
   const res_time = data.dates.start.localTime;
 
@@ -86,7 +99,7 @@ async function setEvent(Id, userId, data) {
     date: res_date,
     time: res_time,
     category: segment._id,
-    userId: userId
+    userId: userId,
   });
 
   const newEvent = await event.save();

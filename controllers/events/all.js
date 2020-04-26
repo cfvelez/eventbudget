@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
     const city = settings.location.name;
     const startDate = settings.getStartDate();
     const endDate = settings.getEndDate();
-    const { segmentId } = req.params;
+    const { page } = req.params;
 
     let ENDPOINT = settings ? TICKETMASTER + `city=[${city}]` : "";
 
@@ -24,14 +24,17 @@ module.exports = async (req, res) => {
         .status(400)
         .json({ msg: "Debe configurar una ciudad de búsqueda." });
 
+    /*
     const clasification = await Category.find({ tkm_id: segmentId });
 
     if (!clasification)
       return res
         .status(400)
         .json({ msg: "Debe ingresar una catégoria de búsqueda." });
-
+    
     ENDPOINT = ENDPOINT + `&classificationId=${segmentId}`;
+      */
+    ENDPOINT = ENDPOINT + `&page=${page}`;
 
     ENDPOINT =
       startDate !== "" && endDate !== ""
@@ -44,15 +47,65 @@ module.exports = async (req, res) => {
         .json({ msg: "Debe configurar un rango de fechas." });
 
     ENDPOINT = ENDPOINT + "&" + API_KEY;
-
-    console.log(ENDPOINT);
-
+    let list = {};
     const response = await axios.get(ENDPOINT, config);
+    const pages = response.data.page;
+    const events = validateResponseData(response)
+      ? response.data._embedded.events
+      : [];
+    if (events.length >= 1) {
+      const listEvents = events.map((item) => {
+        let clasification = item.classifications.shift().segment;
 
-    res.status(200).json(response.data);
+        let image = item.images
+          .filter((image, index) => (index === 0 ? true : false))
+          .shift();
+
+        let datedDta = {
+          localDate: item.dates.start.localDate,
+          localTime: item.dates.start.localTime,
+          timezone: item.dates.timezone,
+        };
+
+        let locationData = item._embedded.venues.shift();
+
+        const objlocation = {
+          name: locationData.name,
+          country: locationData.country,
+          city: locationData.city,
+          state: locationData.state,
+          address: locationData.address,
+        };
+
+        return {
+          id: item.id,
+          name: item.name,
+          image: image.url,
+          link: item.url,
+          category: clasification,
+          date: datedDta,
+          location: objlocation,
+        };
+      });
+
+      list.events = listEvents;
+    } else {
+      list.events = events;
+    }
+    list.page = pages;
+    res.status(200).json(list);
   } catch (error) {
     console.log(error);
-
-    response.redirect("../../auth/logout");
+    res.redirect("../../auth/logout");
   }
 };
+
+function validateResponseData(response) {
+  if ("_embedded" in response.data) {
+    let _embeddedObj = response.data._embedded;
+    if ("events" in _embeddedObj) {
+      return true;
+    }
+  }
+  return false;
+}
