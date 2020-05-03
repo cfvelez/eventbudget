@@ -2,6 +2,8 @@
 require("dotenv").config();
 const EventSchema = require("../../models/Event");
 const CategorySchema = require("../../models/Category");
+const userSchema = require("../../models/User");
+const citySchema = require("../../models/City");
 const TICKETMASTER = `${process.env.TICKETMASTER}events/`;
 const API_KEY = `apikey=${process.env.COSTUMER_KEY}`;
 const axios = require("axios");
@@ -86,16 +88,19 @@ async function setEvent(Id, userId, data) {
     }, [])
     .join("");
 
-  console.log(tkm_id);
   const segment = await CategorySchema.findOne({ tkm_id });
-
   if (segment === null) return null;
+  const user = await userSchema.findOne({ _id: userId }).populate("settings");
+  const locationId = user.settings.location;
+  const city = await citySchema.findOne({ _id: locationId });
+  if (city === null) return null;
 
   const event = new EventSchema({
     eventId: Id,
     name: res_name,
     image: res_image,
-    location: res_location,
+    location: city._id,
+    location_place: res_location,
     date: res_date,
     time: res_time,
     category: segment._id,

@@ -2,41 +2,37 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const settingsSchema = new Schema({
-  budget:{
-          type:Number,
-          require: [true, {message: "El presupuesto es un campo requerido."}]
-  },
-  numTickets:{
+  budget: {
     type: Number,
-    min: [1,"Cantidad miníma de tiquetes para adquirir"]
+    require: [true, { message: "El presupuesto es un campo requerido." }],
   },
-  startDate:{
-    type: String
+  numTickets: {
+    type: Number,
+    min: [1, "Cantidad miníma de tiquetes para adquirir"],
   },
-  endDate:{
-    type: String
+  startDate: {
+    type: String,
   },
-  location:{
+  endDate: {
+    type: String,
+  },
+  location: {
     type: Schema.Types.ObjectId,
-    ref: "City"
+    ref: "City",
   },
-  categories :{
-    array:[{ type: Schema.Types.ObjectId,
-      ref: "Category"}]
-  }
+  categories: {
+    array: [{ type: Schema.Types.ObjectId, ref: "Category" }],
+  },
 });
 
 class settingsClass {
-
-   getStartDate() {
-    return this.startDate !== '' ? `${this.startDate}` + "T00:00:00" : '';
+  getStartDate() {
+    return this.startDate !== "" ? `${this.startDate}` + "T00:00:00" : "";
   }
 
   getEndDate() {
-    return this.endDate !== '' ? `${this.endDate}` + "T23:59:59" : '';
+    return this.endDate !== "" ? `${this.endDate}` + "T23:59:59" : "";
   }
-
- 
 }
 
 settingsSchema.loadClass(settingsClass);

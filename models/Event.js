@@ -4,33 +4,37 @@ const Schema = mongoose.Schema;
 const eventSchema = new Schema({
   eventId: {
     type: String,
-    require: [true, { message: "event Id es requerido." }]
+    require: [true, { message: "event Id es requerido." }],
   },
   name: {
     type: String,
-    require: [true, { message: "nombre es requerido" }]
+    require: [true, { message: "nombre es requerido" }],
   },
   image: {
-    type: String
+    type: String,
   },
   location: {
-    type: String
+    type: Schema.Types.ObjectId,
+    ref: "City",
+  },
+  location_place: {
+    type: String,
   },
   date: {
-    type: Date
+    type: Date,
   },
   time: {
-    type: String
+    type: String,
   },
   category: {
     type: Schema.Types.ObjectId,
-    ref: "Category"
+    ref: "Category",
   },
   //el objeto createdBy es de tipo ObjectId y el atributo ref hace uso del modelo User (en este caso)
   userId: {
     type: Schema.Types.ObjectId,
-    ref: "User"
-  }
+    ref: "User",
+  },
 });
 
 // el string "Event" es la referencia de este modelo.
