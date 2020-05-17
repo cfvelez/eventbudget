@@ -1,4 +1,5 @@
 const passport = require("passport");
+const { JSONResponse } = require("../services/http/status");
 
 module.exports = {
   // 5. Definimos el middlewere que ire en la ruta a autenticar
@@ -8,17 +9,17 @@ module.exports = {
       console.log(
         `Autenticación de estrategia jwt. Información recibida: error: ${error}, user: ${user.email}, info: ${info}`
       );
-      
+
       // comprobamos si hay error interno
-      if (error) return res.status(500).json({ message: "Hubo un error" });
+      if (error)
+        return res.status(200).json(JSONResponse("error", "Hubo un error"));
 
       // Comprobamos si está autorizado
-      if (info) return res.status(401).json({message: `${info}`}); 
+      if (info) return res.status(200).json(JSONResponse("error", `${info}`));
 
       // Comprobamos si está autorizado
-      if (!user) return res.status(401).json({ message: "No autorizado" });
-
-       
+      if (!user)
+        return res.status(200).json(JSONResponse("error", "No autorizado"));
 
       // Iniciamos el usuario en el objeto req para poder acceder en la función handler o principal
       req.user = user;
@@ -26,6 +27,6 @@ module.exports = {
       next();
 
       //Ejecutamos la función con req, res, next como parametros
-    })(req, res, next);//no entiendo esto
-  }
+    })(req, res, next); //no entiendo esto
+  },
 };

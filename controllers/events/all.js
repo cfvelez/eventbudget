@@ -1,7 +1,6 @@
 //Get API
 require("dotenv").config();
 const Settings = require("../../models/Settings");
-const Category = require("../../models/Category");
 const TICKETMASTER = `${process.env.TICKETMASTER}events.json?`;
 const API_KEY = `apikey=${process.env.COSTUMER_KEY}`;
 const axios = require("axios");
@@ -15,6 +14,19 @@ module.exports = async (req, res) => {
       "location"
     );
     const user = req.user;
+
+    if (settings == null)
+      return res
+        .status(400)
+        .json(
+          JSONResponse("error", "Debe configurar las preferencias del usuario")
+        );
+
+    if (settings.location == null)
+      return res
+        .status(400)
+        .json(JSONResponse("error", "Debe configurar las localidades"));
+
     const city = settings.location.name;
     const startDate = settings.getStartDate();
     const endDate = settings.getEndDate();
@@ -56,6 +68,7 @@ module.exports = async (req, res) => {
 
     ENDPOINT = ENDPOINT + "&" + API_KEY;
     let list = {};
+    console.log(ENDPOINT);
     const response = await axios.get(ENDPOINT, config);
     const pages = response.data.page;
     const events = validateResponseData(response)
