@@ -7,8 +7,6 @@ const { JSONResponse } = require("../../services/http/status");
 module.exports = async (req, res) => {
   const { password, email, name, lastname } = req.body;
 
-  console.log(email);
-
   if (password.length < 5) {
     return res
       .status(200)

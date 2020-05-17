@@ -5,10 +5,6 @@ const jwt = require("jsonwebtoken");
 module.exports = async (req, res) => {
   // procedemos a autenticar la estrategia local
   passport.authenticate("facebook", (error, user, info) => {
-    console.log(
-      `Autenticación de estrategia Facebook. Información recibida: error: ${error}, user: ${user}, info: ${info}`
-    );
-
     // Si hay un error de servidor, envíamos un 500
     if (error) return res.status(500).json({ message: "Hubo un error" });
 
@@ -25,17 +21,16 @@ module.exports = async (req, res) => {
       // !NOTA: Transformamos la variable de entorno a número para poder operar con date.now
       exp: Date.now() + parseInt(process.env.JWT_EXPIRES),
       //Enviamos información útil adicional
-      username: user.username
+      username: user.username,
     };
 
     // Haciendo uso de la librería jsonwentoken generamos el token:
     // como primer parametro recibe el payload en formato string (por lo que hay que "stringifycarlo")
     // como segundo parámetro, recibe el SECRET también en formato de string. Lo recogemos del archivo .env
     const token = jwt.sign(JSON.stringify(payload), process.env.JWT_SECRET);
- 
+
     //Devolvemos el token al usuario
     res.status(200).json({ data: { token } });
     // Ejecutamos la función pasandole los parametros req y res
   })(req, res);
 };
-  

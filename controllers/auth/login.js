@@ -6,10 +6,6 @@ const jwt = require("jsonwebtoken");
 module.exports = async (req, res) => {
   // procedemos a autenticar la estrategia local
   passport.authenticate("local", { session: false }, (error, user, info) => {
-    console.log(
-      `Autenticación de estrategia local. Información recibida: error: ${error}, user: ${user}, info: ${info}`
-    );
-
     // Si hay un error de servidor, envíamos un 500
     if (error)
       return res.status(200).json(JSONResponse("error", "Server error"));

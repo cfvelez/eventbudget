@@ -13,7 +13,7 @@ module.exports = new LocalStrategy(
     usernameField: "email",
     passwordField: "password",
     // Dado que no haremos uso de sesiones, es necesaria especificarlo en las distintas estrategias poniendolo a false.
-    session: false
+    session: false,
   },
   async (email, password, next) => {
     console.log(
@@ -25,30 +25,41 @@ module.exports = new LocalStrategy(
 
       /*Si no hay usuario enviamos ejecutamos next con el primer parametro (error) a null, el segundo parametro 
      (data, en este caso usuario) a false y el tercer parametro (info) con el mensaje de error*/
-      if (!user)  return next(null, false, { message: "El usuario no existe" });
+      if (!user) return next(null, false, { message: "El usuario no existe" });
 
-      if(!user.status) return next(null, false, { message: "El usuario no se encuentra activo" });
+      if (!user.status)
+        return next(null, false, {
+          message: "El usuario no se encuentra activo",
+        });
 
-      if(user.provider != 'I'){
-          switch(user.provider){
-            case 'G':  return next(null, false, { message: "Por favor inicie sesión con su cuenta de Google." });break;
-            case 'F':  return next(null, false, { message: "Por favor inice sesión con su cuenta de Facebook." });break;
-            default :
-             return next(null, false, { message: "Tipo de usuario no encontrado, consulte el administrador." });
-          }
-        
+      if (user.provider != "I") {
+        switch (user.provider) {
+          case "G":
+            return next(null, false, {
+              message: "Por favor inicie sesión con su cuenta de Google.",
+            });
+            break;
+          case "F":
+            return next(null, false, {
+              message: "Por favor inice sesión con su cuenta de Facebook.",
+            });
+            break;
+          default:
+            return next(null, false, {
+              message:
+                "Tipo de usuario no encontrado, consulte el administrador.",
+            });
+        }
       }
 
       // comprobamos la contraseña y procedemos igual que si no hay usuario
       if (!bcrypt.compareSync(password, user.password))
-         return next(null, false, { message: "la contraseña no es correcta" });
+        return next(null, false, { message: "la contraseña no es correcta" });
 
       // Si el usuario existe y la contraseña es correcta, lo enviamos como segundo parametro de la función next.
       return next(null, user);
     } catch (error) {
-      //Si hay un error, lo envíamos como primer parametro de la función next.
-      console.log("revisar:",error);
-      return next(error,null,null);
+      return next(error, null, null);
     }
   }
 );

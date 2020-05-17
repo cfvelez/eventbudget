@@ -9,11 +9,12 @@ var indexRouter = require("./routes/index");
 require("./services/passport/config")(app);
 
 const corsOptions = {
-  origin: `http://localhost:3000`,
+  origin: "*",
+  preflightContinue: true,
+  optionsSuccessStatus: 204,
 };
-
 app.use(cors(corsOptions));
-
+app.options("*", cors());
 //importamos las rutas requeridas
 app.use("/", indexRouter);
 

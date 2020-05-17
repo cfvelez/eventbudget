@@ -20,9 +20,7 @@ const settingsSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "City",
   },
-  categories: {
-    array: [{ type: Schema.Types.ObjectId, ref: "Category" }],
-  },
+  categories: [],
 });
 
 class settingsClass {

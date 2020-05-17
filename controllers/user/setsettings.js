@@ -1,6 +1,7 @@
 const User = require("../../models/User");
 const Settings = require("../../models/Settings");
 const City = require("../../models/City");
+const { JSONResponse } = require("../../services/http/status");
 
 module.exports = async (req, res) => {
   try {
@@ -18,14 +19,19 @@ module.exports = async (req, res) => {
     if (bodySettings.budget <= 1)
       return res
         .status(200)
-        .json({ msg: "El presupuesto debe ser mayor a 1 euros." });
+        .json(
+          JSONResponse("error", "El presupuesto debe ser mayor a 1 euros.")
+        );
 
     if (bodySettings.numTickets <= 0)
-      return res.status(200).json({ msg: "Cantidad de tickets incorrecto." });
+      return res
+        .status(200)
+        .json(JSONResponse("error", "Cantidad de tickets incorrecto."));
 
     const city = await City.findById(bodySettings.location);
 
-    if (!city) return res.status(200).json({ msg: "Ciudad no existe." });
+    if (!city)
+      return res.status(200).json(JSONResponse("error", "Ciudad no existe."));
 
     const settingsObj = new Settings({
       budget: bodySettings.budget,
@@ -47,10 +53,7 @@ module.exports = async (req, res) => {
       if (response.n >= 1) {
         return res
           .status(200)
-          .json({
-            result: "ok",
-            msg: "Preferencias actualizadas correctamente.",
-          });
+          .json(JSONResponse("ok", "Preferencias actualizadas correctamente."));
       }
     } else {
       let settings;
@@ -58,18 +61,17 @@ module.exports = async (req, res) => {
       user.settings = settings._id;
 
       if (await user.save()) {
-        return res.status(200).json({
-          result: "ok",
-          msg: "Preferencias actualizadas correctamente.",
-        });
+        return res
+          .status(200)
+          .json(JSONResponse("ok", "Preferencias actualizadas correctamente."));
       }
     }
 
     return res
       .status(200)
-      .json({ result: "error", msg: "Error al guardar las preferencias." });
+      .json(JSONResponse("ok", "Error al guardar las preferencias."));
   } catch (error) {
     console.log(error);
-    res.status(500).json({ result: "error", message: "internal server error" });
+    res.status(500).json(JSONResponse("ok", "internal server error"));
   }
 };
