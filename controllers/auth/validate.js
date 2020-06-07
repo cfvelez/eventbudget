@@ -10,7 +10,6 @@ module.exports = async (req, res) => {
     if (user) res.status(200).json(JSONResponse("ok", "Success"));
     else return res.status(400).json(JSONResponse("error", "Token no válido."));
   } catch (error) {
-    console.log(error);
     res.redirect("../../auth/logout");
   }
 };

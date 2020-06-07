@@ -33,6 +33,7 @@ module.exports = async (req, res) => {
     const user = new User({
       code: confirmationCode,
       password: hashPass,
+      status: true,
       email,
       name,
       lastname,

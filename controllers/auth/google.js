@@ -46,7 +46,7 @@ module.exports = async (req, res) => {
           : req.get("referer");
 
       path = path + "/" + token;
-
+      console.log("google", token);
       return res.redirect(path);
       //return res.status(200).json(JSONResponse("ok", "Success", token));
       // Ejecutamos la función pasandole los parametros req y res

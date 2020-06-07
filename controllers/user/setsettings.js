@@ -33,6 +33,16 @@ module.exports = async (req, res) => {
     if (!city)
       return res.status(200).json(JSONResponse("error", "Ciudad no existe."));
 
+    if (bodySettings.startDate > bodySettings.endDate)
+      return res
+        .status(200)
+        .json(
+          JSONResponse(
+            "error",
+            "La fecha inicial debe ser mayor a la fecha final."
+          )
+        );
+
     const settingsObj = new Settings({
       budget: bodySettings.budget,
       numTickets: bodySettings.numTickets,

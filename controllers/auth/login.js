@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
     // como primer parametro recibe el payload en formato string (por lo que hay que "stringifycarlo")
     // como segundo parámetro, recibe el SECRET también en formato de string. Lo recogemos del archivo .env
     const token = jwt.sign(JSON.stringify(payload), process.env.JWT_SECRET);
-
+    console.log("auth", token);
     if (token) {
       jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {

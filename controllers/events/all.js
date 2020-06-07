@@ -17,14 +17,14 @@ module.exports = async (req, res) => {
 
     if (settings == null)
       return res
-        .status(400)
+        .status(200)
         .json(
           JSONResponse("error", "Debe configurar las preferencias del usuario")
         );
 
     if (settings.location == null)
       return res
-        .status(400)
+        .status(200)
         .json(JSONResponse("error", "Debe configurar las localidades"));
 
     const city = settings.location.name;
@@ -36,7 +36,7 @@ module.exports = async (req, res) => {
 
     if (ENDPOINT === "")
       return res
-        .status(400)
+        .status(200)
         .json(JSONResponse("error", "Debe configurar una ciudad de búsqueda."));
 
     /* El código comentado es porque necesitamos sacar la mayor cantidad de eventos para las pruebas y si filtramos por categoria es muy reducida, seguro por el problema del coronavirus
@@ -58,11 +58,11 @@ module.exports = async (req, res) => {
 
     if (ENDPOINT === "")
       return res
-        .status(400)
+        .status(200)
         .json(
           JSONResponse(
             "error",
-            "Debe configurar una rango de fechas de búsquedas."
+            "Debe configurar uns rango de fechas de búsquedas."
           )
         );
 
@@ -118,7 +118,14 @@ module.exports = async (req, res) => {
     res.status(200).json(JSONResponse("ok", "Success", list));
   } catch (error) {
     console.log(error);
-    res.redirect("../../auth/logout");
+    res
+      .status(200)
+      .json(
+        JSONResponse(
+          "error",
+          "No se obtuvo resultados, revisa la configuración de tus preferencias de búsqueda."
+        )
+      );
   }
 };
 
