@@ -10,6 +10,9 @@ const eventSchema = new Schema({
     type: String,
     require: [true, { message: "nombre es requerido" }],
   },
+  url: {
+    type: String,
+  },
   image: {
     type: String,
   },

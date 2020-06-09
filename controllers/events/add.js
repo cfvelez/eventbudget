@@ -65,7 +65,7 @@ module.exports = async (req, res) => {
 
 async function setEvent(Id, userId, data) {
   const res_name = data.name;
-
+  const res_url = data.url;
   const res_image = data.images.reduce((s, x) => {
     if (x.ratio === "4_3") {
       s = x.url;
@@ -98,6 +98,7 @@ async function setEvent(Id, userId, data) {
   const event = new EventSchema({
     eventId: Id,
     name: res_name,
+    url: res_url,
     image: res_image,
     location: city._id,
     location_place: res_location,

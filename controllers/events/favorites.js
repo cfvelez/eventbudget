@@ -27,6 +27,7 @@ module.exports = async (req, res) => {
         _id: eventDB._id,
         eventId: eventDB.eventId,
         name: eventDB.name,
+        url: eventDB.url,
         image: eventDB.image,
         location: location,
         date: eventDB.date,

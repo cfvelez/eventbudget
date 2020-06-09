@@ -117,7 +117,6 @@ module.exports = async (req, res) => {
     list.page = pages;
     res.status(200).json(JSONResponse("ok", "Success", list));
   } catch (error) {
-    console.log(error);
     res
       .status(200)
       .json(
