@@ -1,5 +1,5 @@
-
 module.exports = {
   get: require("./getsettings"),
-  set: require("./setsettings")
+  set: require("./setsettings"),
+  pass: require("./setpassword"),
 };
