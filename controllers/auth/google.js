@@ -38,14 +38,16 @@ module.exports = async (req, res) => {
       // como segundo parámetro, recibe el SECRET también en formato de string. Lo recogemos del archivo .env
       const token = jwt.sign(JSON.stringify(payload), process.env.JWT_SECRET);
 
+      /*
       path =
         req.get("referer") === undefined ||
         req.get("referer") === null ||
         req.get("referer") == ""
           ? process.env.FRONT_GOOGLE_CALLBACK
           : req.get("referer");
+      */
 
-      path = path + "/" + token;
+      path = process.env.FRONT_GOOGLE_CALLBACK + "/" + token;
       console.log("google", token);
       return res.redirect(path);
       //return res.status(200).json(JSONResponse("ok", "Success", token));
