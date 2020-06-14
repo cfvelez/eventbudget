@@ -48,7 +48,8 @@ module.exports = async (req, res) => {
       */
 
       path = process.env.FRONT_GOOGLE_CALLBACK + "/" + token;
-      console.log(path, token);
+      response = path + token;
+      res.send(response);
       //return res.redirect(path);
       //return res.status(200).json(JSONResponse("ok", "Success", token));
       // Ejecutamos la función pasandole los parametros req y res
