@@ -12,3 +12,5 @@ Código fuente en Javascript para la parte del Backend (API) se implementó:
 - Eliminar eventos de favoritos
 - Listar eventos favoritos
 - Cierre de sesión
+
+Se utilizó base de datos MONGO.
