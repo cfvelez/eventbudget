@@ -1,10 +1,14 @@
-npm i passport
-npm i jsonwebtoken
-npm i uuid
-npm i nodemailer
-npm i passport-local
-npm i passport-jwt
-npm i express-passport-logout
-npm i passport-facebook
+Desarrollo proyecto final - máster Desarrollo Web FullStack con el entorno MERN.
 
-heroku addons:open mongolab
+Código fuente en Javascript para la parte del Backend (API) se implementó:
+
+- Seguridad Login 
+- Registro
+- Login social (Google)
+- Configuración de preferencias de usuario
+- Cambio de clave
+- Gestión de eventos usando el API de TICKETMASTER
+- Guardar eventos a favoritos
+- Eliminar eventos de favoritos
+- Listar eventos favoritos
+- Cierre de sesión
