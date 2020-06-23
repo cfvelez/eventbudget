@@ -1,6 +1,6 @@
-*Desarrollo proyecto final - máster Desarrollo Web FullStack con el entorno MERN.*
+Desarrollo proyecto final - máster Desarrollo Web FullStack con el entorno MERN.
 
-Código fuente en Javascript para la parte del Backend (API) se implementó:
+Código fuente en Javascript usando el framework Express para la parte del Backend (API) donde se implementó:
 
 - Seguridad Login 
 - Registro
